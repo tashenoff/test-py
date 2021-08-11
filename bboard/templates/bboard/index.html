@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href='{% static "css/style.min.css" %}'>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script type="application/json" src="{% url 'json' %}"></script>
+</head>
+
+<body>
+
+    <script>
+        function alpineInstance() {
+            return {
+                title: 'Alpine.js',
+                intro: 'Implement a simple <code class="text-md text-pink-600">fetch()</code> request to render a list of items using Alpine.js :)',
+                items: [],
+            }
+        }
+    </script>
+
+
+    <div class="h-full bg-gray-200 text-gray-800 p-4 lg:p-8" x-data="alpineInstance()" x-init="fetch('{% url 'json' %}')
+               .then(response => response.json())
+               .then(data => items = data)">
+
+        <div class="flex flex-wrap -mx-2 pb-8">
+
+            <template x-for="item in items" :key="item.id">
+                <div class="div">
+                    <div class="div" x-text="item.name"></div>
+                    <div class="div" x-text="item.content"></div>
+                    <div class="div" x-text="item.published"></div>
+<a  x-bind:href="item.id">sss</a>
+                </div>
+            </template>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="w-full flex h-screen">
+        <ul class="w-1/5 bg-blue-500 text-white p-5">
+            {% for rubric in rubrics %}
+            <li>
+                <a href="{% url 'by_rubric' rubric.pk %}">{{ rubric.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="flex flex-col px-5 w-full">
+
+
+
+
+
+
+            {% for bb in bbs %}
+            <div class="border border-gray-400 my-3 p-3 ">
+                <p>рубрика: {{ bb.rubric }}</p>
+                <p>{{ bb.published }}</p>
+                <p>{{ bb.titles }}</p>
+                <p>{{ bb.content }}</p>
+                <p><a href="/bboard/{{ bb.rubric.pk }}/">ddd</a></p>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+</body>
+
+
+</html>
