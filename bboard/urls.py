@@ -1,9 +1,16 @@
 from django.urls import path
-from .views import index, by_rubric
-from bboard import views
+from . import views
+
+
+app_name = 'bboard'
+
 urlpatterns = [
-path ('<int:rubric_id>/', by_rubric, name='by_rubric'),
-path('', index, name='index'),
-path('json', views.json, name='json')
+path ('rubrics/<int:rubric_id>/', views.by_rubric, name='by_rubric'),
+path('', views.index, name='index'),
+path('json/', views.data_json, name='data_json'),
+path('rubric-json/', views.rubricsJson, name='rubrics_json')
+
 
 ]
+
+

@@ -16,6 +16,11 @@ def index(request):
     context = {'bbs': bbs, 'rubrics': rubrics}
     return render(request, 'bboard/index.html', context)
 
+def rubricsJson(request):
+    rubrics = Rubric.objects.all()
+    data = list(rubrics.values())
+    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
+
 def by_rubric(request, rubric_id):
     bbs = Bb.objects.filter(rubric=rubric_id)
     rubrics = Rubric.objects.all()
@@ -23,7 +28,7 @@ def by_rubric(request, rubric_id):
     context = {'bbs': bbs, 'rubrics': rubrics, 'current_rubric': current_rubric}
     return render(request, 'bboard/by_rubric.html', context)
 
-def json(request):
+def data_json(request):
     data = list(Bb.objects.values())
     return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
